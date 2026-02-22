@@ -1,0 +1,16 @@
+services:
+  whisper-asr-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: whisper-asr-mcp
+    volumes:
+      - /home/openclaw/.openclaw/media/inbound:/workspace/media/inbound:ro
+    ports:
+      - "${MCP_PORT:-3020}:3020"
+    env_file:
+      - .env
+    environment:
+      - WHISPER_ASR_URL=${WHISPER_ASR_URL}
+      - FFMPEG_API_URL=${FFMPEG_API_URL}
+    restart: unless-stopped
